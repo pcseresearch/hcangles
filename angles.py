@@ -1,14 +1,22 @@
+#!/apps/python/bin/python3
 from imutils import contours
 import numpy as np
 import argparse
 import imutils
 import cv2
+import subprocess
 
 run = input("Run Number:")
-file = open("run_" + run + ".dat")
+
+extract_image_command = "../spectrometer_angles/bin/extract_coda_images ../raw/coin_all_0%s.dat -r %s" % (run,run)
+
+print ("Extract image command = ", extract_image_command)
+subprocess.call(extract_image_command)
+
+file = open("SHMS_encoder_" + run + ".dat")
 lang = []
 
-with open("run_" + run + ".dat") as f:
+with open("SHMS_encoder_" + run + ".dat") as f:
 	for line in f:
 		data = line.split()
 		lang.append(float(data[0]))
@@ -26,7 +34,7 @@ sqreKernel = cv2.getStructuringElement(cv2.MORPH_RECT,(6,6))
 squrKernel = cv2.getStructuringElement(cv2.MORPH_RECT,(1,1))
 
 
-image = cv2.imread("SHMS_angle_0" + run + ".jpg")
+image = cv2.imread("SHMS_angle_" + run + ".jpg")
 image = imutils.resize(image,width=300)
 gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
 
