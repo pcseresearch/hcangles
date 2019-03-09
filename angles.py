@@ -4,14 +4,15 @@ import numpy as np
 import argparse
 import imutils
 import cv2
+import os
 import subprocess
 
 run = input("Run Number:")
 
-extract_image_command = "../spectrometer_angles/bin/extract_coda_images ../raw/coin_all_0%s.dat -r %s" % (run,run)
+extract_image_command = "../spectrometer_angles/bin/extract_coda_images ../spectrometer_angles/raw/coin_all_0%s.dat -r %s" % (run,run)
 
 print ("Extract image command = ", extract_image_command)
-subprocess.call(extract_image_command)
+os.system(extract_image_command)
 
 file = open("SHMS_encoder_" + run + ".dat")
 lang = []
