@@ -18,6 +18,10 @@ if imutils.is_cv4():
 	contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
 else:
 	contours = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+	if imutils.is_cv2():
+		contours = contours[0]
+	else:
+		contours = contours[1]
 
 cv2.drawContours(im,contours,-1, (0,255,0), 3)
 cv2.imshow("Contours",im)
