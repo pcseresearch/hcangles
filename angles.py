@@ -60,9 +60,13 @@ thresh = cv2.threshold(gradX, 0, 255,
 thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, sqKernel)
 #cv2.imshow("Image Thresh Again",thresh)
 
-cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
+cnts,hierarchy = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
 	cv2.CHAIN_APPROX_SIMPLE)
-cnts = cnts[0] if imutils.is_cv2() else cnts[1]
+#cnts = cnts[0] if imutils.is_cv2() else cnts[1]
+
+cv2.drawContours(image,cnts,-1, (0,255,0), 3)
+cv2.imshow("With Contours",image)
+cv2.waitKey(0)
 
 for (i, c) in enumerate(cnts):
 	(x, y, w, h) = cv2.boundingRect(c)
