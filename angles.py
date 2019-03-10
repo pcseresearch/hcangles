@@ -70,13 +70,15 @@ else:
 		cnts = cnts[1]
 
 cv2.drawContours(image,cnts,-1, (0,255,0), 3)
-cv2.imshow("With Contours",image)
-cv2.waitKey(0)
+#cv2.imshow("With Contours",image)
+#cv2.waitKey(0)
 
 for (i, c) in enumerate(cnts):
 	(x, y, w, h) = cv2.boundingRect(c)
 	ar = w / float(h)
-	if ar > 5 and y > 100 and y < 125 and x > 75 and x < 210:
+	if (ar>0.0001):
+		print (i,x,y,w,h,ar)
+	if ar > 5 and y > 100 and y < 165 and x > 75 and x < 210:
 		print("Vernier Scale ROI Values:")
 		print(x,y,w,h,ar)
 		print("Veriner Scale Center Value:")
@@ -90,7 +92,8 @@ for (i, c) in enumerate(cnts):
 print("Hundredth Angle Value:")
 result = (xvalue - middle)/(50)
 sang = (result)/(10)
-final = sang + lang[0]
+central_angle = float(int(10*lang[0])/10.0)
+final = central_angle+sang
 print(sang)
 print("Final Angle Value:")
 print(final)
