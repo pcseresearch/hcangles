@@ -63,7 +63,7 @@ cv2.imshow("Thresh Again",thresh)
 cv2.waitKey(0)
 
 if imutils.is_cv4():
-	cnts,hieracrchy = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+	cnts,hierarchy = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 else:
 	cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 	if imutils.is_cv2():
