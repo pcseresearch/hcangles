@@ -40,10 +40,14 @@ squrKernel = cv2.getStructuringElement(cv2.MORPH_RECT,(1,1))
 image = cv2.imread("SHMS_angle_" + run + ".jpg")
 #image = imutils.resize(image,width=300)
 gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-#cv2.imshow("Gray",gray)
-#cv2.waitKey(0)
+cv2.imwrite("gray.png",gray)
+cv2.imshow("Gray",gray)
+cv2.waitKey(0)
 
 tophat = cv2.morphologyEx(gray, cv2.MORPH_TOPHAT, sqreKernel)
+cv2.imwrite("tophat.png",tophat)
+cv2.imshow("Tophat",tophat)
+cv2.waitKey(0)
 
 
 gradX = cv2.Sobel(tophat, ddepth=cv2.CV_32F, dx=1, dy=0,ksize=-1)
@@ -56,6 +60,7 @@ gradX = gradX.astype("uint8")
 gradX = cv2.morphologyEx(gradX, cv2.MORPH_CLOSE, sqreKernel)
 cv2.imshow("GradX",gradX)
 cv2.waitKey(0)
+cv2.imwrite("gradX.png",gradX)
 
 
 thresh = cv2.threshold(gradX, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
@@ -64,8 +69,9 @@ thresh = cv2.threshold(gradX, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
 
 
 thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, sqKernel)
-#cv2.imshow("Thresh Again",thresh)
-#cv2.waitKey(0)
+cv2.imshow("Thresh Again",thresh)
+cv2.waitKey(0)
+cv2.imwrite("thresh.png",thresh)
 
 if imutils.is_cv4():
     cnts,hierarchy = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -76,9 +82,10 @@ else:
     else:
         cnts = cnts[1]
 
-cv2.drawContours(image,cnts,-1, (0,255,0), 3)
-cv2.imshow("With Contours",image)
+cv2.drawContours(gray,cnts,-1, (0,255,0), 3)
+cv2.imshow("With Contours",gray)
 cv2.waitKey(0)
+cv2.imwrite("contours.png",gray)
 
 middleval = [0.0 for i in range(0,21)]
 count = [0 for i in range(0,21)]
