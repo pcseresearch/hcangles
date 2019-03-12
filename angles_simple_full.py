@@ -136,6 +136,8 @@ xmin = middle - 5*popt[1]
 xmax = middle + 5*popt[1]    
 ycentral_max = 0
 
+xvalue = -1.0
+
 for (i, c) in enumerate(cnts):
     (x, y, w, h) = cv2.boundingRect(c)
     ar = w / float(h)
@@ -146,11 +148,50 @@ for (i, c) in enumerate(cnts):
         xvalue = (w/2) + x
         print(xvalue)
 
-print("Hundredth Angle Value:")
-result = (xvalue - middle)/popt[1]
-sang = (result)/(100)
-central_angle = float(round(10*lang[0])/10.0)
-final = central_angle+sang
-print(sang)
-print("Final Angle Value:")
-print(final)
+xvaluel = -1.0
+xvalueh = -1.0
+
+if xvalue == -1.0:
+    xmin = middle - 12*popt[1]
+    xmax = middle - 8*popt[1]
+    ycentral_max = 0
+    for (i, c) in enumerate(cnts):
+        (x, y, w, h) = cv2.boundingRect(c)
+        ar = w / float(h)
+        if x > xmin and x < xmax and y > 120 and y < 260 and w > 3 and h > 3 and h > ycentral_max:
+            print("Lower Center Marker Value:")
+            print(x,y,w,h,ar)
+            ycentral_max = h
+            xvaluel = (w/2) + x
+            print(xvaluel)
+    xmin = middle +8*popt[1]
+    xmax = middle +12*popt[1]
+    ycentral_max = 0
+    for (i, c) in enumerate(cnts):
+        (x, y, w, h) = cv2.boundingRect(c)
+        ar = w / float(h)
+        if x > xmin and x < xmax and y > 120 and y < 260 and w > 3 and h > 3 and h > ycentral_max:
+            print("Lower Center Marker Value:")
+            print(x,y,w,h,ar)
+            ycentral_max = h
+            xvalueh = (w/2) + x
+            print(xvalueh)
+
+if (xvaluel > 0 and xvalueh > 0):
+    xvalue = (xvaluel + xvalueh)/2.0
+    
+if (xvalue > 0):    
+    print("Hundredth Angle Value:")
+    result = (xvalue - middle)/popt[1]
+    sang = (result)/(100)
+    central_angle = float(round(10*lang[0])/10.0)
+    final = central_angle+sang
+    print(sang)
+    print("Final Angle Value:")
+    print(final)
+else:
+    print("Could not determine angle - using encoder value")
+    final = lang[0]
+    print("Final Angle Value:")
+    print(final)
+
