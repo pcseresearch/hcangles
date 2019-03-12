@@ -82,9 +82,10 @@ else:
     else:
         cnts = cnts[1]
 
-cv2.drawContours(gray,cnts,-1, (0,255,0), 3)
-cv2.imshow("With Contours",gray)
+cv2.drawContours(image,cnts,-1, (0,255,0), 3)
+cv2.imshow("With Contours",image)
 cv2.waitKey(0)
+cv2.drawContours(gray,cnts,-1, (0,255,0), 3)
 cv2.imwrite("contours.png",gray)
 
 middleval = [0.0 for i in range(0,21)]
