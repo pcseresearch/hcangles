@@ -83,8 +83,8 @@ else:
         cnts = cnts[1]
 
 cv2.drawContours(image,cnts,-1, (0,255,0), 3)
-#cv2.imshow("With Contours",image)
-#cv2.waitKey(0)
+cv2.imshow("With Contours",image)
+cv2.waitKey(0)
 cv2.drawContours(gray,cnts,-1, (0,255,0), 3)
 cv2.imwrite("contours.png",gray)
 
@@ -100,14 +100,23 @@ for (i, c) in enumerate(cnts):
     if w > 5 and h > 22 and y > 260 and y < 270 and x > 150 and x < 660:
         print("Vernier Scale ROI Values:")
         print(x,y,w,h,ar)
-        print("Vernier Scale Center Value:")
-        if w > 10:
+        print("Vernier Scale Center Value: index = ",index)
+        if w > 10 and w < 30:
             print("Vernier Scale Double:")
             count[index+10] = index
             count[index+11] = index+1
             middleval[index+10] = (w/4) + x
             middleval[index+11] = (3*w/4) + x
             index = index + 2
+        elif w >= 30:
+            print("Vernier Scale Treble:")
+            count[index+10] = index
+            count[index+11] = index+1
+            count[index+12] = index+2
+            middleval[index+10] = (w/4) + x
+            middleval[index+11] = (w/2) + x
+            middleval[index+12] = (3*w/4) + x
+            index = index + 3
         else:
             print("Vernier Scale Single:")
             count[index+10] = index
