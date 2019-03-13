@@ -16,7 +16,7 @@ def fitfunction(x,a,b):
 
 run = input("Run Number:")
 
-extract_image_command = "../spectrometer_angles/bin/extract_code_images ../spectrometer_angles/raw/coin_all_0%s.dat -r %s" % (run,run)
+extract_image_command = "../spectrometer_angles/bin/extract_coda_images ../spectrometer_angles/raw/coin_all_0%s.dat -r %s" % (run,run)
 
 print ("Extract image command = ",extract_image_command)
 os.system(extract_image_command)
@@ -192,6 +192,7 @@ if (xvalue > 0):
     central_angle = float(round(10*lang[0])/10.0)
     final = central_angle+sang
     print(sang)
+    print(central_angle)
     print("Final Angle Value:")
     print(final)
 else:
